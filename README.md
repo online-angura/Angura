@@ -168,10 +168,10 @@ En GitHub, activa:
 Settings → Pages → Source → GitHub Actions
 ```
 
-La configuración actual usa el repositorio `Angura.store`, por lo que la tienda se publica en:
+La configuración actual usa el repositorio `online-angura/Angura.github.io`, por lo que la tienda se publica en:
 
 ```text
-https://angelramir3z960-hub.github.io/Angura.store/store
+https://online-angura.github.io/store
 ```
 
 El workflow utiliza estos secretos de GitHub para el acceso al editor:

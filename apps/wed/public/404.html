@@ -3,12 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      const base = '/Angura.store/';
-      const path = window.location.pathname.startsWith(base)
-        ? window.location.pathname.slice(base.length)
-        : '';
-      const target = `${base}${path}${window.location.search}${window.location.hash}`;
-      window.location.replace(`${base}?redirect=${encodeURIComponent(target)}`);
+      const path = window.location.pathname || '/';
+      const target = `${path}${window.location.search}${window.location.hash}`;
+      window.location.replace(`/?redirect=${encodeURIComponent(target)}`);
     </script>
   </head>
   <body></body>
