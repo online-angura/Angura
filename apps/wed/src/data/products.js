@@ -1,12 +1,15 @@
 export const INSTAGRAM_HANDLE = '@angura.stor3';
 export const INSTAGRAM_URL =
   'https://www.instagram.com/angura.stor3?stkn=NnB5eG9nNWdnemh6&utm_source=qr';
+export const INSTAGRAM_DM_URL = 'https://ig.me/m/angura.stor3';
 
 export const HERO_IMAGE =
   'https://images.hostinger.com/bace8d35-f8f1-404f-8154-cdbedb6d11e8.png';
 
 export const FABRIC_IMAGE =
   'https://images.hostinger.com/4c94b844-7983-4fb8-8834-2fcd55c173b6.png';
+
+export const EUR_TO_COP_RATE = 4500;
 
 export const products = [
   {

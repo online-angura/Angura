@@ -21,17 +21,42 @@ import {
 } from '@/components/ui/sheet';
 import Seo from '@/components/Seo';
 import {
-  products,
   INSTAGRAM_URL,
+  INSTAGRAM_DM_URL,
   INSTAGRAM_HANDLE,
   HERO_IMAGE,
   FABRIC_IMAGE,
+  EUR_TO_COP_RATE,
 } from '@/data/products';
-import pocketbaseClient from '@/lib/pocketbaseClient';
+import { useCatalog } from '@/lib/catalog';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const formatPrice = (n) => `${n} €`;
+const formatPrice = (n) =>
+  new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  }).format(n * EUR_TO_COP_RATE);
+
+function LanguageSwitcher({ language, setLanguage, label }) {
+  return (
+    <label className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] text-bone/50">
+      <span className="sr-only">{label}</span>
+      <select
+        aria-label={label}
+        value={language}
+        onChange={(event) => setLanguage(event.target.value)}
+        className="border border-bone/20 bg-coal px-2 py-1 text-[10px] text-bone outline-none"
+      >
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </label>
+  );
+}
 
 function ProductCard({ product, onAdd, index }) {
+  const { t } = useLanguage();
   const [size, setSize] = useState(product.sizes[0]);
   const [added, setAdded] = useState(false);
 
@@ -102,11 +127,11 @@ function ProductCard({ product, onAdd, index }) {
       >
         {added ? (
           <>
-            <Check className="h-4 w-4" strokeWidth={2} /> Añadido
+            <Check className="h-4 w-4" strokeWidth={2} /> {t.added}
           </>
         ) : (
           <>
-            <ShoppingBag className="h-4 w-4" strokeWidth={2} /> Añadir
+            <ShoppingBag className="h-4 w-4" strokeWidth={2} /> {t.add}
           </>
         )}
       </button>
@@ -114,8 +139,10 @@ function ProductCard({ product, onAdd, index }) {
   );
 }
 
-function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
+function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products }) {
   const [submitting, setSubmitting] = useState(false);
+  const [checkoutNotice, setCheckoutNotice] = useState('');
+  const { t } = useLanguage();
 
   const total = cart.reduce((sum, item) => {
     const p = products.find((pr) => pr.id === item.id);
@@ -125,21 +152,32 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
   const finalizeOrder = async () => {
     if (submitting) return;
     setSubmitting(true);
+    setCheckoutNotice('');
     const items = cart.map((item) => {
       const p = products.find((pr) => pr.id === item.id);
       return { name: p.name, size: item.size, qty: item.qty, price: p.price };
     });
+    const orderMessage = [
+      'Hola Angura, quiero hacer este pedido:',
+      '',
+      ...items.map(
+        (item) =>
+          `• ${item.qty}x ${item.name} · Talla ${item.size} · ${formatPrice(item.price * item.qty)}`,
+      ),
+      '',
+      `Total: ${formatPrice(total)}`,
+    ].join('\n');
+
     try {
-      await pocketbaseClient.collection('orders').create({
-        items,
-        total,
-        status: 'nuevo',
-      });
-    } catch {
-      // aunque falle el guardado, redirigimos para que el cliente coordine
+      await navigator.clipboard.writeText(orderMessage);
+      setCheckoutNotice(t.copied);
+    } catch (error) {
+      console.error('No se pudo copiar el pedido al portapapeles.', error);
+      setCheckoutNotice(t.copyFailed);
+    } finally {
+      window.open(INSTAGRAM_DM_URL, '_blank', 'noopener,noreferrer');
+      setSubmitting(false);
     }
-    window.open(INSTAGRAM_URL, '_blank', 'noopener,noreferrer');
-    setSubmitting(false);
   };
 
   return (
@@ -150,7 +188,7 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
       >
         <SheetHeader className="border-b border-bone/15 px-6 py-5">
           <SheetTitle className="flex items-center gap-3 font-display text-4xl font-normal text-bone">
-            Carrito
+            {t.cart}
             <span className="bg-blood px-2 py-0.5 font-sans text-xs font-bold uppercase tracking-[0.25em] text-bone">
               {cart.reduce((n, i) => n + i.qty, 0)}
             </span>
@@ -161,11 +199,10 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
             <Skull className="h-12 w-12 text-blood/60" strokeWidth={1.5} />
             <p className="font-display text-3xl text-bone">
-              El carrito está muerto
+              {t.emptyCart}
             </p>
             <p className="max-w-[26ch] text-sm text-bone/50">
-              Revisa la colección, elige tus prendas y vuelve a sellar el
-              pedido.
+              {t.emptyCartText}
             </p>
           </div>
         ) : (
@@ -240,7 +277,7 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
             <div className="border-t border-bone/15 px-6 py-5">
               <div className="flex items-baseline justify-between">
                 <span className="text-xs uppercase tracking-[0.25em] text-bone/50">
-                  Total
+                  {t.total}
                 </span>
                 <span className="font-display text-4xl text-blood">
                   {formatPrice(total)}
@@ -253,12 +290,17 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
                 className="mt-4 flex min-h-[52px] w-full items-center justify-center gap-2 bg-blood px-4 text-xs font-bold uppercase tracking-[0.25em] text-bone transition-all duration-150 hover:bg-rust active:scale-[0.98] disabled:opacity-60"
               >
                 <Instagram className="h-4 w-4" strokeWidth={2} />
-                {submitting ? 'Enviando pedido…' : 'Finalizar en Instagram'}
+                {submitting ? '...' : t.finishInstagram}
               </button>
               <p className="pt-3 text-center text-[11px] leading-relaxed text-bone/40">
-                Tu pedido se nos envía solo al finalizar; te llevamos a{' '}
-                {INSTAGRAM_HANDLE} para coordinar pago y envío.
+                Preparamos tu pedido y abrimos el chat de {INSTAGRAM_HANDLE}{' '}
+                con el mensaje copiado para coordinar pago y envío.
               </p>
+              {checkoutNotice && (
+                <p className="pt-2 text-center text-xs text-blood" role="status">
+                  {checkoutNotice}
+                </p>
+              )}
             </div>
           </>
         )}
@@ -268,6 +310,8 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem }) {
 }
 
 export default function HomePage() {
+  const [products] = useCatalog();
+  const { language, setLanguage, t } = useLanguage();
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -329,21 +373,22 @@ export default function HomePage() {
             href="#coleccion"
             className="rotate-180 transition-colors hover:text-blood [writing-mode:vertical-rl]"
           >
-            Colección
+            {t.collection}
           </a>
           <a
             href="#manifiesto"
             className="rotate-180 transition-colors hover:text-blood [writing-mode:vertical-rl]"
           >
-            Manifiesto
+            {t.manifesto}
           </a>
           <a
             href="#como-comprar"
             className="rotate-180 transition-colors hover:text-blood [writing-mode:vertical-rl]"
           >
-            Comprar
+            {t.buy}
           </a>
         </nav>
+        <LanguageSwitcher language={language} setLanguage={setLanguage} label={t.language} />
         <button
           type="button"
           onClick={() => setCartOpen(true)}
@@ -377,59 +422,48 @@ export default function HomePage() {
             </span>
           )}
         </button>
+        <LanguageSwitcher language={language} setLanguage={setLanguage} label={t.language} />
       </header>
 
       <main className="lg:pl-14">
         {/* HERO */}
         <section
           id="inicio"
-          className="relative flex min-h-[100dvh] items-end overflow-hidden lg:items-center"
+          className="relative flex min-h-[100dvh] items-center overflow-hidden bg-[#050505]"
         >
-          <div className="absolute inset-y-0 right-0 w-full lg:w-[62vw]">
-            <img
-              src={HERO_IMAGE}
-              alt="Modelo con hoodie negro de angura"
-              className="clip-torn-bottom h-full w-full object-cover object-top grayscale-[0.5] contrast-125 lg:scale-110 lg:object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-coal/40 to-coal" />
-          </div>
+          <div className="absolute inset-0 bg-[#050505]" />
+          <img
+            src={`${import.meta.env.BASE_URL}angura-brand.svg`}
+            alt="Logo de Angura"
+            className="absolute inset-0 h-full w-full object-cover opacity-100"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08),_transparent_45%)]" />
 
           <div className="relative z-10 w-full px-5 pb-10 pt-28 sm:px-10 lg:px-16 lg:py-0">
-            <div className="relative max-w-xl border-l-2 border-blood bg-coal/80 p-7 backdrop-blur-sm sm:p-10">
-              <span className="tape absolute -right-4 -top-5 rotate-6 px-4 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-bone">
-                No rules · no drops
-              </span>
-              <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.35em] text-blood">
+            <div className="w-full max-w-[390px] border-l-2 border-blood bg-[#050505]/70 p-4 backdrop-blur-[2px] sm:p-6">
+              <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.38em] text-blood">
                 <Skull className="h-4 w-4" strokeWidth={2} />
-                Edición ilimitada · sin drops
+                {t.underground}
               </p>
-              <h1 className="pt-5 font-display text-[20vw] leading-[0.85] sm:text-7xl lg:text-8xl">
-                Ropa de
-                <br />
-                <span className="text-stroke">edición</span>
-                <br />
-                <span className="text-blood">ilimitada</span>
-              </h1>
-              <p className="max-w-[42ch] pt-6 text-sm leading-relaxed text-bone/70">
-                En angura no hay series limitadas ni agotados que caducan.
-                Reeditamos cada prenda mientras alguien la siga queriendo.
-                Underground, sin caducidad.
+
+              <p className="max-w-[42ch] pt-4 text-sm uppercase tracking-[0.18em] text-bone/70">
+                {t.hero}
               </p>
-              <div className="flex flex-wrap items-center gap-3 pt-7">
+
+              <div className="flex flex-wrap items-center gap-3 pt-5">
                 <a
                   href="#coleccion"
-                  className="flex min-h-[52px] items-center gap-2 bg-blood px-6 text-xs font-bold uppercase tracking-[0.25em] text-bone transition-all duration-150 hover:bg-rust active:scale-[0.98]"
+                  className="inline-flex min-h-[48px] items-center justify-center border border-bone bg-blood px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:bg-rust"
                 >
-                  Ver colección
-                  <ArrowDown className="h-4 w-4" strokeWidth={2} />
+                  {t.viewCollection}
                 </a>
                 <button
                   type="button"
                   onClick={openInstagram}
-                  className="flex min-h-[52px] items-center gap-2 border-2 border-bone px-6 text-xs font-bold uppercase tracking-[0.25em] text-bone transition-all duration-150 hover:border-blood hover:text-blood active:scale-[0.98]"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 border border-bone/30 bg-transparent px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:border-blood hover:text-blood"
                 >
-                  {INSTAGRAM_HANDLE}
-                  <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+                  <Instagram className="h-4 w-4" strokeWidth={2} />
+                  Instagram
                 </button>
               </div>
             </div>
@@ -470,10 +504,10 @@ export default function HomePage() {
         <section id="coleccion" className="px-5 py-20 sm:px-10 lg:px-16 lg:py-28">
           <div className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-bone pb-6">
             <h2 className="font-display text-6xl leading-none text-bone sm:text-7xl">
-              La <span className="italic text-blood">colección</span>
+              {t.collectionTitle}
             </h2>
             <p className="max-w-[30ch] text-xs uppercase leading-relaxed tracking-[0.25em] text-bone/45">
-              06 prendas · siempre disponibles · tallas S—XL
+              {t.alwaysAvailable}
             </p>
           </div>
 
@@ -491,38 +525,35 @@ export default function HomePage() {
             <div className="flex flex-col justify-center px-5 py-20 sm:px-10 lg:px-16 lg:py-32">
               <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.35em] text-blood">
                 <Flame className="h-4 w-4" strokeWidth={2} />
-                Manifiesto
+                {t.manifestoTitle}
               </p>
               <p className="pt-6 font-display text-4xl leading-[1.05] sm:text-5xl">
-                Lo limitado crea escasez.
+                {t.limited}
                 <br />
                 <span className="italic text-blood">
-                  Lo ilimitado crea comunidad.
+                  {t.unlimited}
                 </span>
               </p>
               <p className="max-w-[48ch] pt-8 text-sm leading-relaxed text-coal/70">
-                Cada prenda de angura se corta, cose y pespuntea bajo pedido y
-                se vuelve a producir tantas veces como haga falta. Sin
-                reventa, sin cuenta atrás, sin miedo a quedarte fuera. La
-                percha es tuya cuando tú decidas.
+                {t.manifestoText}
               </p>
               <div className="flex gap-10 pt-10">
                 <div>
                   <p className="font-display text-5xl text-blood">∞</p>
                   <p className="pt-1 text-[10px] uppercase tracking-[0.25em] text-coal/55">
-                    Reediciones
+                    {t.reissues}
                   </p>
                 </div>
                 <div>
                   <p className="font-display text-5xl text-blood">0</p>
                   <p className="pt-1 text-[10px] uppercase tracking-[0.25em] text-coal/55">
-                    Drops cerrados
+                    {t.closedDrops}
                   </p>
                 </div>
                 <div>
                   <p className="font-display text-5xl text-blood">240</p>
                   <p className="pt-1 text-[10px] uppercase tracking-[0.25em] text-coal/55">
-                    Gramos algodón
+                    {t.cotton}
                   </p>
                 </div>
               </div>
@@ -545,10 +576,10 @@ export default function HomePage() {
         >
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="font-display text-6xl leading-none text-bone sm:text-7xl">
-              Cómo <span className="italic text-blood">comprar</span>
+              {t.howToBuy}
             </h2>
             <p className="max-w-[32ch] text-xs uppercase leading-relaxed tracking-[0.25em] text-bone/45">
-              El pedido se cierra por mensaje directo
+              {t.dmClose}
             </p>
           </div>
 
@@ -556,18 +587,18 @@ export default function HomePage() {
             {[
               {
                 n: '01',
-                t: 'Elige prenda y talla',
-                d: 'Recorre la colección y selecciona tu talla en cada prenda. Todo está siempre disponible.',
+                t: t.choose,
+                d: t.chooseText,
               },
               {
                 n: '02',
-                t: 'Arma tu carrito',
-                d: 'Añade tantas prendas como quieras y revisa el total en el carrito, sin sorpresas.',
+                t: t.buildCart,
+                d: t.buildCartText,
               },
               {
                 n: '03',
-                t: 'Cierra por Instagram',
-                d: `Al finalizar te redirigimos a ${INSTAGRAM_HANDLE}. Tu pedido se nos envía solo y coordinamos pago y envío contigo por DM.`,
+                t: t.closeInstagram,
+                d: t.closeInstagramText,
               },
             ].map((step) => (
               <div
@@ -685,6 +716,7 @@ export default function HomePage() {
         cart={cart}
         updateQty={updateQty}
         removeItem={removeItem}
+        products={products}
       />
     </div>
   );
