@@ -5,14 +5,17 @@ import react from '@vitejs/plugin-react';
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   plugins: [react()],
-  base: '/',
+
+  base: '/Angura/',
+
   resolve: {
     alias: {
       '@': path.resolve(rootDir, 'src'),
     },
   },
+
   server: {
     host: '127.0.0.1',
     port: 3000,
@@ -21,6 +24,7 @@ export default defineConfig(({ mode }) => ({
       usePolling: true,
     },
   },
+
   preview: {
     host: '127.0.0.1',
     port: 3000,
