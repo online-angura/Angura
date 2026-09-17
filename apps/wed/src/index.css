@@ -196,6 +196,32 @@ svg {
 
   body {
     overflow-x: hidden;
+    letter-spacing: 0.01em;
+  }
+
+  section[id='inicio'] > div > div {
+    max-width: min(100%, 320px);
+  }
+
+  section[id='coleccion'] h2,
+  section[id='como-comprar'] h2 {
+    font-size: clamp(2.9rem, 17vw, 4.2rem);
+    line-height: 0.96;
+  }
+
+  section[id='manifiesto'] .font-display,
+  section[id='manifiesto'] p.font-display {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+    line-height: 0.95;
+  }
+
+  section[id='como-comprar'] [class*='font-display'] {
+    font-size: clamp(2.15rem, 9vw, 2.8rem);
+    line-height: 0.96;
+  }
+
+  .brand-mask {
+    font-size: clamp(4rem, 20vw, 8rem);
   }
 }
 
