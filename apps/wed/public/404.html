@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      const path = window.location.pathname || '/';
-      const target = `${path}${window.location.search}${window.location.hash}`;
-      window.location.replace(`/?redirect=${encodeURIComponent(target)}`);
+      const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      const pathWithoutSlash = target === '/' ? '/' : target.replace(/^\/+/, '');
+      window.location.replace(`/?redirect=${encodeURIComponent(pathWithoutSlash)}`);
     </script>
   </head>
   <body></body>

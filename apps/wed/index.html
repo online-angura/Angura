@@ -8,7 +8,9 @@
 		<script>
 			const redirect = new URLSearchParams(window.location.search).get('redirect');
 			if (redirect) {
-				window.history.replaceState(null, '', redirect);
+				const route = decodeURIComponent(redirect);
+				const normalized = route.startsWith('/') ? route : `/${route}`;
+				window.history.replaceState(null, '', `${window.location.pathname}#${normalized}`);
 			}
 		</script>
 	</head>
