@@ -3,9 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-      const pathWithoutSlash = target === '/' ? '/' : target.replace(/^\/+/, '');
-      window.location.replace(`/?redirect=${encodeURIComponent(pathWithoutSlash)}`);
+      const pathname = window.location.pathname || '/';
+      const basePath = pathname.includes('/Angura') ? '/Angura' : '';
+      const relativePath = pathname.startsWith(basePath)
+        ? pathname.slice(basePath.length) || '/'
+        : pathname;
+      const redirectTarget = relativePath === '/' ? '/' : relativePath;
+      const targetUrl = `${basePath || '/'}?redirect=${encodeURIComponent(redirectTarget)}`;
+      window.location.replace(targetUrl);
     </script>
   </head>
   <body></body>

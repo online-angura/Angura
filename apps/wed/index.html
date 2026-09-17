@@ -8,8 +8,12 @@
 		<script>
 			const redirect = new URLSearchParams(window.location.search).get('redirect');
 			if (redirect) {
-				const route = decodeURIComponent(redirect);
-				const normalized = route.startsWith('/') ? route : `/${route}`;
+				const rawRoute = decodeURIComponent(redirect);
+				const repoBase = '/Angura';
+				const cleaned = rawRoute.startsWith(repoBase)
+					? rawRoute.slice(repoBase.length) || '/'
+					: rawRoute;
+				const normalized = cleaned.startsWith('/') ? cleaned : `/${cleaned}`;
 				window.history.replaceState(null, '', `${window.location.pathname}#${normalized}`);
 			}
 		</script>
