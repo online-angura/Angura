@@ -154,7 +154,13 @@ El proyecto incluye un workflow en:
 .github/workflows/deploy-pages.yml
 ```
 
-Para publicar:
+Para publicar, crea el repositorio con este nombre:
+
+```text
+online-angura/Angura
+```
+
+Y luego ejecuta:
 
 ```powershell
 git add .
@@ -168,10 +174,16 @@ En GitHub, activa:
 Settings → Pages → Source → GitHub Actions
 ```
 
-La configuración actual usa el repositorio `online-angura/Angura.github.io`, por lo que la tienda se publica en:
+La página se publicará en:
 
 ```text
-https://online-angura.github.io/store
+https://online-angura.github.io/Angura/
+```
+
+Si quieres acceder directamente a la tienda, normalmente será en:
+
+```text
+https://online-angura.github.io/Angura/store
 ```
 
 El workflow utiliza estos secretos de GitHub para el acceso al editor:
@@ -196,3 +208,4 @@ npm run build
 ```
 
 Si la compilación termina con `built`, la versión de producción se generó correctamente.
+ la compilación termina con `built`, la versión de producción se generó correctamente.
