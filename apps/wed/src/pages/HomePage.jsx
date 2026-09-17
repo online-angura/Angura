@@ -405,15 +405,15 @@ export default function HomePage() {
       </aside>
 
       {/* Barra superior móvil */}
-      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b border-bone/15 bg-coal/90 px-5 py-3 lg:hidden">
-        <a href="#inicio" className="font-display text-3xl leading-none text-bone">
+      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-2 border-b border-bone/15 bg-coal/90 px-3 py-3 lg:hidden">
+        <a href="#inicio" className="font-display text-2xl leading-none text-bone">
           angura
         </a>
         <button
           type="button"
           onClick={() => setCartOpen(true)}
           aria-label="Abrir carrito"
-          className="relative flex h-11 w-11 items-center justify-center border border-bone/25"
+          className="relative flex h-10 w-10 items-center justify-center border border-bone/25"
         >
           <ShoppingBag className="h-4 w-4" strokeWidth={2} />
           {cartCount > 0 && (
@@ -439,7 +439,7 @@ export default function HomePage() {
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08),_transparent_45%)]" />
 
-          <div className="relative z-10 w-full px-5 pb-10 pt-28 sm:px-10 lg:px-16 lg:py-0">
+          <div className="relative z-10 w-full px-4 pb-10 pt-24 sm:px-10 lg:px-16 lg:py-0">
             <div className="w-full max-w-[390px] border-l-2 border-blood bg-[#050505]/70 p-4 backdrop-blur-[2px] sm:p-6">
               <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.38em] text-blood">
                 <Skull className="h-4 w-4" strokeWidth={2} />
@@ -450,17 +450,17 @@ export default function HomePage() {
                 {t.hero}
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 pt-5">
+              <div className="flex w-full flex-col gap-3 pt-5 sm:w-auto sm:flex-row sm:items-center">
                 <a
                   href="#coleccion"
-                  className="inline-flex min-h-[48px] items-center justify-center border border-bone bg-blood px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:bg-rust"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center border border-bone bg-blood px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:bg-rust sm:w-auto"
                 >
                   {t.viewCollection}
                 </a>
                 <button
                   type="button"
                   onClick={openInstagram}
-                  className="inline-flex min-h-[48px] items-center justify-center gap-2 border border-bone/30 bg-transparent px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:border-blood hover:text-blood"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-bone/30 bg-transparent px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:border-blood hover:text-blood sm:w-auto"
                 >
                   <Instagram className="h-4 w-4" strokeWidth={2} />
                   Instagram
