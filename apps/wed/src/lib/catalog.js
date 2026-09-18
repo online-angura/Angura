@@ -14,9 +14,15 @@ const readCatalog = () => {
 
 export const useCatalog = () => {
   const [catalog, setCatalog] = useState(readCatalog);
+  const [storageError, setStorageError] = useState(false);
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
+      setStorageError(false);
+    } catch {
+      setStorageError(true);
+    }
   }, [catalog]);
 
   useEffect(() => {
@@ -28,7 +34,7 @@ export const useCatalog = () => {
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
-  return [catalog, setCatalog];
+  return [catalog, setCatalog, storageError];
 };
 
 export const resetCatalog = () => {

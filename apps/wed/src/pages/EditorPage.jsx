@@ -24,7 +24,7 @@ const slugify = (value) =>
 const inputClass = 'w-full border border-bone/20 bg-black/40 px-3 py-3 text-sm text-bone outline-none transition-colors focus:border-blood';
 
 export default function EditorPage() {
-  const [catalog, setCatalog] = useCatalog();
+  const [catalog, setCatalog, storageError] = useCatalog();
   const { user, logout } = useAuth();
   const [selectedId, setSelectedId] = useState(null);
   const [form, setForm] = useState(emptyProduct);
@@ -51,8 +51,32 @@ export default function EditorPage() {
   const loadImage = (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setNotice('Selecciona un archivo de imagen válido.');
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      setNotice('La imagen debe pesar menos de 8 MB.');
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onload = () => updateField('image', String(reader.result));
+    reader.onerror = () => setNotice('No se pudo leer la imagen.');
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => setNotice('No se pudo procesar la imagen.');
+      image.onload = () => {
+        const maxSide = 1400;
+        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+        updateField('image', canvas.toDataURL('image/jpeg', 0.82));
+        setNotice('Imagen cargada.');
+      };
+      image.src = String(reader.result);
+    };
     reader.readAsDataURL(file);
   };
 
@@ -60,8 +84,10 @@ export default function EditorPage() {
     event.preventDefault();
     const name = form.name.trim();
     const image = form.image.trim();
-    if (!name || !image || !form.price) {
-      setNotice('Completa nombre, precio e imagen.');
+    const price = Number(form.price);
+    const sizes = form.sizes.split(',').map((size) => size.trim()).filter(Boolean);
+    if (!name || !image || !Number.isFinite(price) || price <= 0 || sizes.length === 0) {
+      setNotice('Completa nombre, precio mayor que cero, tallas e imagen.');
       return;
     }
 
@@ -69,8 +95,8 @@ export default function EditorPage() {
       id: selectedId || `${slugify(name)}-${Date.now()}`,
       name,
       detail: form.detail.trim(),
-      price: Number(form.price) / EUR_TO_COP_RATE,
-      sizes: form.sizes.split(',').map((size) => size.trim()).filter(Boolean),
+      price: price / EUR_TO_COP_RATE,
+      sizes,
       image,
     };
 
@@ -165,6 +191,7 @@ export default function EditorPage() {
             <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-bone/60">URL de imagen<input className={inputClass} value={form.image.startsWith('data:') ? '' : form.image} onChange={(event) => updateField('image', event.target.value)} placeholder="https://.../imagen.png" /></label>
             <label className="flex min-h-[46px] cursor-pointer items-center justify-center gap-2 border border-dashed border-bone/30 text-xs font-bold uppercase tracking-widest text-bone/70 transition-colors hover:border-blood hover:text-blood"><ImagePlus className="h-4 w-4" /> Subir imagen<input type="file" accept="image/*" onChange={loadImage} className="sr-only" /></label>
             {form.image && <img src={form.image} alt="Vista previa" className="aspect-[3/4] max-h-72 w-full object-cover" />}
+            {storageError && <p className="border border-blood/50 bg-blood/10 px-3 py-2 text-xs text-bone/80">No hay espacio suficiente en este navegador. Usa una imagen más pequeña o una URL externa.</p>}
             {notice && <p className="border border-blood/50 bg-blood/10 px-3 py-2 text-xs text-bone/80">{notice}</p>}
             <button type="submit" className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-blood px-4 text-xs font-bold uppercase tracking-[0.22em] text-bone transition-colors hover:bg-rust"><Save className="h-4 w-4" /> Guardar producto</button>
           </form>

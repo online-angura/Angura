@@ -12,6 +12,7 @@ import {
   Skull,
   Zap,
   Flame,
+  LockKeyhole,
 } from 'lucide-react';
 import {
   Sheet,
@@ -389,6 +390,13 @@ export default function HomePage() {
           </a>
         </nav>
         <LanguageSwitcher language={language} setLanguage={setLanguage} label={t.language} />
+        <a
+          href={`${import.meta.env.BASE_URL}login`}
+          aria-label="Abrir acceso de administrador"
+          className="flex h-11 w-11 items-center justify-center border border-bone/25 text-bone/60 transition-colors hover:border-blood hover:bg-blood hover:text-bone"
+        >
+          <LockKeyhole className="h-4 w-4" strokeWidth={2} />
+        </a>
         <button
           type="button"
           onClick={() => setCartOpen(true)}
@@ -408,6 +416,13 @@ export default function HomePage() {
       <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-2 border-b border-bone/15 bg-coal/90 px-3 py-3 lg:hidden">
         <a href="#inicio" className="font-display text-2xl leading-none text-bone">
           angura
+        </a>
+        <a
+          href={`${import.meta.env.BASE_URL}login`}
+          aria-label="Abrir acceso de administrador"
+          className="flex h-10 w-10 items-center justify-center border border-bone/25 text-bone/60"
+        >
+          <LockKeyhole className="h-4 w-4" strokeWidth={2} />
         </a>
         <button
           type="button"

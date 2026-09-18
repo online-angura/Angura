@@ -105,6 +105,8 @@ El editor permite:
 
 Actualmente, los cambios del editor se guardan en `localStorage` del navegador. Por eso son locales a cada navegador y dispositivo; no se sincronizan automáticamente entre clientes.
 
+El acceso al editor también está disponible desde el icono de candado de la tienda. Las imágenes subidas se reducen automáticamente para que puedan guardarse en el navegador. Esta solución sirve para administrar la tienda desde el mismo navegador; para publicar cambios para todos los visitantes y desde varios dispositivos hace falta conectar `catalog.js` a una base de datos y almacenamiento de imágenes, por ejemplo PocketBase o Supabase.
+
 Para cambiar los productos iniciales del código, edita:
 
 ```text
