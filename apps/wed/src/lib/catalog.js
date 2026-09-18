@@ -12,27 +12,29 @@ const readCatalog = () => {
   }
 };
 
-export const useCatalog = () => {
-  const [catalog, setCatalog] = useState(readCatalog);
+export const useCatalog = ({ persist = true } = {}) => {
+  const [catalog, setCatalog] = useState(persist ? readCatalog : initialProducts);
   const [storageError, setStorageError] = useState(false);
 
   useEffect(() => {
+    if (!persist) return undefined;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
       setStorageError(false);
     } catch {
       setStorageError(true);
     }
-  }, [catalog]);
+  }, [catalog, persist]);
 
   useEffect(() => {
+    if (!persist) return undefined;
     const handleStorage = (event) => {
       if (event.key === STORAGE_KEY) setCatalog(readCatalog());
     };
 
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
-  }, []);
+  }, [persist]);
 
   return [catalog, setCatalog, storageError];
 };

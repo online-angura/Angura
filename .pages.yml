@@ -8,19 +8,27 @@ content:
     type: file
     path: apps/wed/src/data/products.json
     format: json
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7268730 (Connect public catalog to Pages CMS)
     fields:
       - name: products
         label: Productos
         type: object
         list:
-          collapsible:
+              summary: "{fields.name}"
             collapsed: true
+<<<<<<< HEAD
             summary: "{name}"
+=======
+              required: true
+>>>>>>> 7268730 (Connect public catalog to Pages CMS)
         fields:
           - name: id
             label: ID
-            type: string
+              required: true
+<<<<<<< HEAD
             required: true
 
           - name: name
@@ -37,11 +45,32 @@ content:
             type: number
             required: true
 
+=======
+              options:
+                media: uploads
+          - name: name
+            label: Nombre
+            type: string
+          - name: detail
+            label: Descripcion
+            type: text
+          - name: price
+            label: Precio EUR
+            type: number
+>>>>>>> 7268730 (Connect public catalog to Pages CMS)
           - name: sizes
             label: Tallas
             type: string
             list: true
+<<<<<<< HEAD
 
           - name: image
             label: Imagen
             type: image
+=======
+          - name: image
+            label: Imagen
+            type: image
+            options:
+              media: uploads
+>>>>>>> 7268730 (Connect public catalog to Pages CMS)

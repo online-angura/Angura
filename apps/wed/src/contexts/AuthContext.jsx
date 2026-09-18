@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
 const AuthContext = createContext(null);
-const ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || '').trim().toLowerCase();
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || '';
+const CONFIGURED_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || '').trim().toLowerCase();
+const CONFIGURED_ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || '';
+const ADMIN_EMAIL = CONFIGURED_ADMIN_EMAIL;
+const ADMIN_PASSWORD = CONFIGURED_ADMIN_PASSWORD;
 const SESSION_KEY = 'angura-editor-session';
 
 export const AuthProvider = ({ children }) => {
@@ -17,10 +19,11 @@ export const AuthProvider = ({ children }) => {
     });
 
     const login = (email, password) => {
+        const normalizedEmail = email.trim().toLowerCase();
         const valid =
-            email.trim().toLowerCase() === ADMIN_EMAIL &&
-            password === ADMIN_PASSWORD &&
-            Boolean(ADMIN_EMAIL && ADMIN_PASSWORD);
+            normalizedEmail === CONFIGURED_ADMIN_EMAIL &&
+            password === CONFIGURED_ADMIN_PASSWORD &&
+            Boolean(CONFIGURED_ADMIN_EMAIL && CONFIGURED_ADMIN_PASSWORD);
         if (!valid) throw new Error('Credenciales incorrectas');
         sessionStorage.setItem(SESSION_KEY, 'active');
         setUser({ email: ADMIN_EMAIL });

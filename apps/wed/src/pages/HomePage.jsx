@@ -311,7 +311,7 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
 }
 
 export default function HomePage() {
-  const [products] = useCatalog();
+  const [products] = useCatalog({ persist: false });
   const { language, setLanguage, t } = useLanguage();
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
