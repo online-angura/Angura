@@ -1,0 +1,47 @@
+media:
+  input: apps/wed/public/uploads
+  output: /uploads
+
+content:
+  - name: products
+    label: Productos
+    type: file
+    path: apps/wed/src/data/products.json
+    format: json
+
+    fields:
+      - name: products
+        label: Productos
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: id
+            label: ID
+            type: string
+            required: true
+
+          - name: name
+            label: Nombre
+            type: string
+            required: true
+
+          - name: detail
+            label: Descripción
+            type: text
+
+          - name: price
+            label: Precio
+            type: number
+            required: true
+
+          - name: sizes
+            label: Tallas
+            type: string
+            list: true
+
+          - name: image
+            label: Imagen
+            type: image
