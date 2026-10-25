@@ -5,7 +5,7 @@ export const INSTAGRAM_URL =
   'https://www.instagram.com/angura.stor3?stkn=NnB5eG9nNWdnemh6&utm_source=qr';
 export const INSTAGRAM_DM_URL = 'https://ig.me/m/angura.stor3';
 
-export const WHATSAPP_NUMBER = '3239755997';
+export const WHATSAPP_NUMBER = '573239755997';
 export const WHATSAPP_CONTACT_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const WHATSAPP_URL = `${WHATSAPP_CONTACT_URL}?text=`;
 
