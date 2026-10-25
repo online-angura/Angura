@@ -15,6 +15,22 @@
         "/uploads/imagen_2026-10-25_013217435.png",
         "/uploads/imagen_2026-10-25_013351712.png"
       ]
+    },
+    {
+      "id": "prod-002",
+      "name": "Camiseta “Gato estelar”",
+      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
+      "price": 89998,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "images": [
+        "/uploads/Camiseta morada con gato y estrella.png",
+        "/uploads/Camiseta púrpura lavada con logo ANGGURA.png"
+      ]
     }
   ]
 }
