@@ -30,15 +30,18 @@ content:
             label: Detalle
             type: text
           - name: price
-            label: Precio (EUR)
+            label: Precio (COP)
             type: number
             required: true
           - name: sizes
             label: Tallas
             type: string
             list: true
-          - name: image
-            label: Imagen
+          - name: images
+            label: Galería de imágenes (máximo 10)
             type: image
             options:
               media: uploads
+              multiple:
+                max: 10
+              unique: true

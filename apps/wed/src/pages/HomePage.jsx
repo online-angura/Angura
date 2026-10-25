@@ -13,6 +13,8 @@ import {
   Zap,
   Flame,
   LockKeyhole,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import {
   Sheet,
@@ -27,7 +29,6 @@ import {
   INSTAGRAM_HANDLE,
   HERO_IMAGE,
   FABRIC_IMAGE,
-  EUR_TO_COP_RATE,
   resolveImage,
 } from '@/data/products';
 import { useCatalog } from '@/lib/catalog';
@@ -38,7 +39,7 @@ const formatPrice = (n) =>
     style: 'currency',
     currency: 'COP',
     maximumFractionDigits: 0,
-  }).format(n * EUR_TO_COP_RATE);
+  }).format(n);
 
 function LanguageSwitcher({ language, setLanguage, label }) {
   return (
@@ -61,6 +62,8 @@ function ProductCard({ product, onAdd, index }) {
   const { t } = useLanguage();
   const [size, setSize] = useState(product.sizes[0]);
   const [added, setAdded] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const productImages = product.images?.length ? product.images : [product.image].filter(Boolean);
 
   const handleAdd = () => {
     onAdd(product, size);
@@ -74,11 +77,34 @@ function ProductCard({ product, onAdd, index }) {
     >
       <div className="clip-torn relative overflow-hidden bg-ash ring-1 ring-inset ring-bone/10">
         <img
-          src={resolveImage(product.image)}
-          alt={product.name}
+          src={resolveImage(productImages[activeImageIndex])}
+          alt={`${product.name} ${activeImageIndex + 1}`}
           loading="lazy"
           className="aspect-[3/4] w-full object-cover grayscale-[0.35] contrast-125 transition-all duration-500 ease-out group-hover:scale-[1.05] group-hover:grayscale-0"
         />
+        {productImages.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={() => setActiveImageIndex((activeImageIndex - 1 + productImages.length) % productImages.length)}
+              aria-label={`Imagen anterior de ${product.name}`}
+              className="absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center bg-coal/80 text-bone transition-colors hover:bg-blood"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveImageIndex((activeImageIndex + 1) % productImages.length)}
+              aria-label={`Siguiente imagen de ${product.name}`}
+              className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center bg-coal/80 text-bone transition-colors hover:bg-blood"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            <span className="absolute bottom-3 left-3 bg-coal/80 px-2 py-1 text-[10px] text-bone">
+              {activeImageIndex + 1} / {productImages.length}
+            </span>
+          </>
+        )}
         <span className="absolute left-3 top-3 bg-blood px-2 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.25em] text-bone">
           {String(index + 1).padStart(2, '0')}
         </span>
@@ -220,7 +246,7 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
                   >
                     <div className="clip-torn h-24 w-20 shrink-0 overflow-hidden bg-ash">
                       <img
-                        src={resolveImage(p.image)}
+                        src={resolveImage(p.images?.[0] || p.image)}
                         alt={p.name}
                         className="h-full w-full object-cover grayscale-[0.4] contrast-125"
                       />

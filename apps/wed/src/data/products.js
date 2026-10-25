@@ -11,8 +11,6 @@ export const HERO_IMAGE =
 export const FABRIC_IMAGE =
   'https://images.hostinger.com/4c94b844-7983-4fb8-8834-2fcd55c173b6.png';
 
-export const EUR_TO_COP_RATE = 4500;
-
 export const products = productsJson.products;
 
 export const resolveImage = (src) => {

@@ -11,7 +11,9 @@
         "L",
         "XL"
       ],
-      "image": "/uploads/Camiseta ANGURA de metal oscuro.png"
+      "images": [
+        "/uploads/Camiseta ANGURA de metal oscuro.png"
+      ]
     }
   ]
 }
