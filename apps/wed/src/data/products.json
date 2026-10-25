@@ -1,22 +1,6 @@
 {
   "products": [
     {
-      "id": "prod-001",
-      "name": "Camiseta “Dulce Pesadilla”",
-      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
-      "price": 90000,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/imagen_2026-10-25_013217435.png",
-        "/uploads/imagen_2026-10-25_013351712.png"
-      ]
-    },
-    {
       "id": "prod-002",
       "name": "Camiseta “Gato estelar”",
       "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
