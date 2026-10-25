@@ -1,0 +1,17 @@
+{
+  "products": [
+    {
+      "id": "prod-001",
+      "name": "Camiseta “Dulce Pesadilla”",
+      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
+      "price": 90000,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "/uploads/Camiseta ANGURA de metal oscuro.png"
+    }
+  ]
+}
