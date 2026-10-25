@@ -31,6 +31,22 @@
         "/uploads/Camiseta ANGURA de lavado ácido-1.png",
         "/uploads/Camiseta Gótica con Gato Monstruoso.png"
       ]
+    },
+    {
+      "id": "prod-003",
+      "name": "Camiseta “Ojo caótico”",
+      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
+      "price": 90000,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "images": [
+        "/uploads/Camiseta Angura gótica en negro lavado.png",
+        "/uploads/Camiseta gótica Angura con corazón ocular neon.png"
+      ]
     }
   ]
 }
