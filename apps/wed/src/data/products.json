@@ -18,22 +18,6 @@
     },
     {
       "id": "prod-002",
-      "name": "Camiseta “Gato estelar”",
-      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
-      "price": 90000,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/Camiseta UFO y gato flotante.png",
-        "/uploads/Camiseta blanca con logo urbano ANGŌURA.png"
-      ]
-    },
-    {
-      "id": "prod-003",
       "name": "Camiseta “Alma nocturna”",
       "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
       "price": 90000,
