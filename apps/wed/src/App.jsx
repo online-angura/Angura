@@ -2,9 +2,6 @@ import React from 'react';
 import { Navigate, Route, Routes, BrowserRouter as Router, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
-import EditorPage from './pages/EditorPage';
-import LoginPage from './pages/LoginPage';
-import ProtectedRoute from './components/ProtectedRoute';
 
 function AppRoutes() {
     const { pathname, search, hash } = useLocation();
@@ -28,15 +25,7 @@ function AppRoutes() {
     return (
         <Routes>
             <Route path="/store" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route
-                path="/editor"
-                element={
-                    <ProtectedRoute>
-                        <EditorPage />
-                    </ProtectedRoute>
-                }
-            />
+            <Route path="*" element={<Navigate to="/store" replace />} />
         </Routes>
     );
 }

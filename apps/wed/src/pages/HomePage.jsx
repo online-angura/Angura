@@ -28,6 +28,7 @@ import {
   HERO_IMAGE,
   FABRIC_IMAGE,
   EUR_TO_COP_RATE,
+  resolveImage,
 } from '@/data/products';
 import { useCatalog } from '@/lib/catalog';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -73,7 +74,7 @@ function ProductCard({ product, onAdd, index }) {
     >
       <div className="clip-torn relative overflow-hidden bg-ash ring-1 ring-inset ring-bone/10">
         <img
-          src={product.image}
+          src={resolveImage(product.image)}
           alt={product.name}
           loading="lazy"
           className="aspect-[3/4] w-full object-cover grayscale-[0.35] contrast-125 transition-all duration-500 ease-out group-hover:scale-[1.05] group-hover:grayscale-0"
@@ -219,7 +220,7 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
                   >
                     <div className="clip-torn h-24 w-20 shrink-0 overflow-hidden bg-ash">
                       <img
-                        src={p.image}
+                        src={resolveImage(p.image)}
                         alt={p.name}
                         className="h-full w-full object-cover grayscale-[0.4] contrast-125"
                       />
@@ -391,7 +392,9 @@ export default function HomePage() {
         </nav>
         <LanguageSwitcher language={language} setLanguage={setLanguage} label={t.language} />
         <a
-          href={`${import.meta.env.BASE_URL}login`}
+          href="https://app.pagescms.org"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Abrir acceso de administrador"
           className="flex h-11 w-11 items-center justify-center border border-bone/25 text-bone/60 transition-colors hover:border-blood hover:bg-blood hover:text-bone"
         >
@@ -418,7 +421,9 @@ export default function HomePage() {
           angura
         </a>
         <a
-          href={`${import.meta.env.BASE_URL}login`}
+          href="https://app.pagescms.org"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Abrir acceso de administrador"
           className="flex h-10 w-10 items-center justify-center border border-bone/25 text-bone/60"
         >

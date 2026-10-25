@@ -18,23 +18,13 @@ npm install
 
 ## Desarrollo local
 
-Inicia el servidor:
+Inicia Vite desde la raíz:
 
 ```powershell
 npm run dev
 ```
 
-Abre la tienda en:
-
-```text
-http://127.0.0.1:3000/store
-```
-
-El editor privado está en:
-
-```text
-http://127.0.0.1:3000/editor
-```
+Vite muestra en la terminal la dirección para abrir la tienda.
 
 ## Scripts disponibles
 
@@ -45,22 +35,7 @@ npm run start    # Sirve la versión compilada
 npm run setup    # Instala las dependencias
 ```
 
-## Variables de entorno
-
-Copia el archivo de ejemplo:
-
-```powershell
-Copy-Item apps/wed/.env.example apps/wed/.env
-```
-
-Configura las credenciales del editor en `apps/wed/.env`:
-
-```env
-VITE_ADMIN_EMAIL=tu-correo@ejemplo.com
-VITE_ADMIN_PASSWORD=tu-contrasena
-```
-
-No subas `.env` a GitHub. El archivo está incluido en `.gitignore`.
+No se requieren variables de entorno para la tienda.
 
 ## Estructura principal
 
@@ -72,16 +47,14 @@ apps/wed/
 ├── src/
 │   ├── components/           # Componentes reutilizables
 │   ├── contexts/
-│   │   ├── AuthContext.jsx   # Acceso local al editor
 │   │   └── LanguageContext.jsx
 │   ├── data/
-│   │   └── products.js       # Productos, imágenes y configuración
+│   │   ├── products.json     # Catálogo administrado con Pages CMS
+│   │   └── products.js       # Datos y configuración de productos
 │   ├── lib/
-│   │   └── catalog.js        # Catálogo guardado en el navegador
+│   │   └── catalog.js        # Lectura estática del catálogo
 │   ├── pages/
 │   │   ├── HomePage.jsx      # Tienda y carrito
-│   │   ├── LoginPage.jsx     # Inicio de sesión del editor
-│   │   └── EditorPage.jsx    # Gestión de productos
 │   ├── App.jsx               # Rutas de la aplicación
 │   └── main.jsx              # Punto de entrada
 └── vite.config.js            # Configuración local y GitHub Pages
@@ -89,34 +62,18 @@ apps/wed/
 
 ## Cambiar productos e imágenes
 
-Puedes modificar los productos desde:
+Administra los productos en [Pages CMS](https://app.pagescms.org), autorizando la aplicación en el repositorio `online-angura/Angura`. Cada guardado crea un commit en GitHub; el workflow compila y publica automáticamente el cambio en GitHub Pages.
 
-```text
-http://127.0.0.1:3000/editor
-```
-
-El editor permite:
-
-- Añadir productos.
-- Cambiar nombres, detalles, precios y tallas.
-- Cambiar imágenes mediante URL o archivo.
-- Eliminar productos.
-- Restaurar el catálogo original.
-
-La tienda pública lee el catálogo desde `apps/wed/src/data/products.json`. Ese archivo se administra con Pages CMS y cada cambio guardado en GitHub dispara el workflow de GitHub Pages para publicarlo a todos los visitantes. El editor interno conserva su guardado local para pruebas; no debe usarse como mecanismo de publicación online.
-
-El acceso al editor también está disponible desde el icono de candado de la tienda. Las imágenes subidas se reducen automáticamente para que puedan guardarse en el navegador. Esta solución sirve para administrar la tienda desde el mismo navegador; para publicar cambios para todos los visitantes y desde varios dispositivos hace falta conectar `catalog.js` a una base de datos y almacenamiento de imágenes, por ejemplo PocketBase o Supabase.
-
-Para cambiar los productos publicados, edita `products.json` desde Pages CMS. Para cambiar los productos iniciales manualmente, edita:
-
-```text
-apps/wed/src/data/products.js
-```
-
-La configuración de Pages CMS está en `.pages.yml` y administra:
+El archivo de catálogo es:
 
 ```text
 apps/wed/src/data/products.json
+```
+
+La configuración de Pages CMS está en `.pages.yml`. Las imágenes se guardan en:
+
+```text
+apps/wed/public/uploads/
 ```
 
 ## Idiomas
@@ -159,7 +116,7 @@ apps/wed/dist/
 El proyecto incluye un workflow en:
 
 ```text
-.github/workflows/deploy-pages.yml
+.github/workflows/deploy.yml
 ```
 
 Para publicar, crea el repositorio con este nombre:
@@ -194,19 +151,6 @@ Si quieres acceder directamente a la tienda, normalmente será en:
 https://online-angura.github.io/Angura/store
 ```
 
-El workflow utiliza estos secretos de GitHub para el acceso al editor:
-
-```text
-VITE_ADMIN_EMAIL
-VITE_ADMIN_PASSWORD
-```
-
-Configúralos en:
-
-```text
-Settings → Secrets and variables → Actions
-```
-
 ## Verificación
 
 Antes de subir cambios, ejecuta:
@@ -216,4 +160,3 @@ npm run build
 ```
 
 Si la compilación termina con `built`, la versión de producción se generó correctamente.
- la compilación termina con `built`, la versión de producción se generó correctamente.

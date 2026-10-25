@@ -14,3 +14,9 @@ export const FABRIC_IMAGE =
 export const EUR_TO_COP_RATE = 4500;
 
 export const products = productsJson.products;
+
+export const resolveImage = (src) => {
+  if (!src) return '';
+  if (/^(https?:)?\/\//.test(src) || src.startsWith('data:')) return src;
+  return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+};
