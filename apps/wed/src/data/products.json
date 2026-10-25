@@ -15,6 +15,22 @@
         "/uploads/Camiseta púrpura lavada con logo ANGGURA_nobg-1.png",
         "/uploads/Camiseta morada con gato y estrella_nobg.png"
       ]
+    },
+    {
+      "id": "prod-002",
+      "name": "Camiseta “Oscuridad del Valle”",
+      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
+      "price": 90000,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "images": [
+        "/uploads/Camiseta ANGURA de lavado ácido-1.png",
+        "/uploads/Camiseta Gótica con Gato Monstruoso.png"
+      ]
     }
   ]
 }
