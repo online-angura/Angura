@@ -25,8 +25,9 @@ import {
 import Seo from '@/components/Seo';
 import {
   INSTAGRAM_URL,
-  INSTAGRAM_DM_URL,
-  INSTAGRAM_HANDLE,
+  WHATSAPP_URL,
+  WHATSAPP_CONTACT_URL,
+  WHATSAPP_NUMBER,
   HERO_IMAGE,
   FABRIC_IMAGE,
   resolveImage,
@@ -181,11 +182,15 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
     if (submitting) return;
     setSubmitting(true);
     setCheckoutNotice('');
+
     const items = cart.map((item) => {
       const p = products.find((pr) => pr.id === item.id);
       return { name: p.name, size: item.size, qty: item.qty, price: p.price };
     });
+
     const orderMessage = [
+      'Bienvenido a Angura, donde cada prenda cuenta una historia.',
+      '',
       'Hola Angura, quiero hacer este pedido:',
       '',
       ...items.map(
@@ -196,14 +201,15 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
       `Total: ${formatPrice(total)}`,
     ].join('\n');
 
+    const whatsappUrl = `${WHATSAPP_URL}${encodeURIComponent(orderMessage)}`;
+
     try {
       await navigator.clipboard.writeText(orderMessage);
-      setCheckoutNotice(t.copied);
     } catch (error) {
       console.error('No se pudo copiar el pedido al portapapeles.', error);
-      setCheckoutNotice(t.copyFailed);
     } finally {
-      window.open(INSTAGRAM_DM_URL, '_blank', 'noopener,noreferrer');
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      setCheckoutNotice(t.copied);
       setSubmitting(false);
     }
   };
@@ -315,14 +321,15 @@ function CartDrawer({ open, onOpenChange, cart, updateQty, removeItem, products 
                 type="button"
                 onClick={finalizeOrder}
                 disabled={submitting}
-                className="mt-4 flex min-h-[52px] w-full items-center justify-center gap-2 bg-blood px-4 text-xs font-bold uppercase tracking-[0.25em] text-bone transition-all duration-150 hover:bg-rust active:scale-[0.98] disabled:opacity-60"
+                className="mt-4 flex min-h-[52px] w-full items-center justify-center gap-2 bg-blood px-4 text-xs font-bold uppercase tracking-[0.25em] text-bone shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-rust hover:shadow-[0_0_25px_rgba(180,33,29,0.35)] active:scale-[0.98] disabled:opacity-60"
               >
-                <Instagram className="h-4 w-4" strokeWidth={2} />
-                {submitting ? '...' : t.finishInstagram}
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
+                  <path d="M20.52 3.48A11.86 11.86 0 0 0 3.46 19.5L2 22l2.55-1.42A11.87 11.87 0 1 0 20.52 3.48Zm-8.73 15.48c-1.5 0-2.93-.45-4.18-1.3l-.3-.18-1.56.43.42-1.5-.2-.32A9.53 9.53 0 1 1 18.6 8.7a9.38 9.38 0 0 1-6.8 10.26Zm5.24-7.12c-.29-.15-1.72-.85-1.99-.95-.27-.1-.47-.15-.67.15-.2.29-.77.95-.94 1.14-.17.2-.35.22-.65.08-.29-.15-1.23-.46-2.34-1.46-.86-.77-1.45-1.71-1.62-2-.17-.29-.02-.45.13-.59.13-.13.29-.35.44-.52.15-.17.19-.29.29-.48.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.91-2.21-.24-.58-.49-.5-.67-.5-.17 0-.37-.02-.57-.02-.2 0-.52.08-.8.37-.27.29-1.03 1-1.03 2.45s1.06 2.83 1.2 3.03c.15.2 2.07 3.13 5.02 4.39.7.3 1.25.49 1.68.63.71.23 1.35.2 1.86.12.57-.08 1.72-.7 1.96-1.38.24-.68.24-1.27.17-1.38-.07-.11-.26-.18-.55-.33Z" />
+                </svg>
+                {submitting ? '...' : t.finishWhatsApp}
               </button>
               <p className="pt-3 text-center text-[11px] leading-relaxed text-bone/40">
-                Preparamos tu pedido y abrimos el chat de {INSTAGRAM_HANDLE}{' '}
-                con el mensaje copiado para coordinar pago y envío.
+                Confirmamos tu pedido por WhatsApp y coordinamos pago y envío directamente con la tienda.
               </p>
               {checkoutNotice && (
                 <p className="pt-2 text-center text-xs text-blood" role="status">
@@ -372,18 +379,21 @@ export default function HomePage() {
   const openInstagram = () =>
     window.open(INSTAGRAM_URL, '_blank', 'noopener,noreferrer');
 
+  const openWhatsApp = () =>
+    window.open(WHATSAPP_CONTACT_URL, '_blank', 'noopener,noreferrer');
+
   return (
     <div className="grain min-h-screen bg-coal font-sans text-bone antialiased">
       <Helmet>
         <title>angura — edición ilimitada · underground</title>
         <meta
           name="description"
-          content="angura: ropa de edición ilimitada, actitud underground. Sin drops, sin agotados. Arma tu carrito y cierra el pedido por Instagram."
+          content="angura: ropa de edición ilimitada, actitud underground. Sin drops, sin agotados. Arma tu carrito y cierra el pedido por WhatsApp."
         />
       </Helmet>
       <Seo
         title="angura — edición ilimitada · underground"
-        description="Ropa de edición ilimitada con actitud underground. Arma tu carrito y cierra el pedido por Instagram."
+        description="Ropa de edición ilimitada con actitud underground. Arma tu carrito y cierra el pedido por WhatsApp."
         image={HERO_IMAGE}
         siteName="angura"
       />
@@ -506,7 +516,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={openInstagram}
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-bone/30 bg-transparent px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-colors hover:border-blood hover:text-blood sm:w-auto"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-bone/30 bg-bone/5 px-5 text-[10px] font-bold uppercase tracking-[0.3em] text-bone transition-all duration-200 hover:border-blood hover:bg-blood hover:text-bone sm:w-auto"
                 >
                   <Instagram className="h-4 w-4" strokeWidth={2} />
                   Instagram
@@ -643,8 +653,8 @@ export default function HomePage() {
               },
               {
                 n: '03',
-                t: t.closeInstagram,
-                d: t.closeInstagramText,
+                t: 'Cierra por WhatsApp',
+                d: 'Al finalizar te redirigimos a WhatsApp para confirmar el pedido, el pago y el envío.',
               },
             ].map((step) => (
               <div
@@ -673,7 +683,7 @@ export default function HomePage() {
               <div key={dup} className="flex shrink-0 items-center gap-6 pr-6">
                 {[
                   'PEDIDOS POR DM',
-                  'ANGURA.STOR3',
+                  '@angura.stor3',
                   'PAGO · ENVÍO · CIUDAD',
                   'UNDERGROUND',
                   '∞',
@@ -702,12 +712,15 @@ export default function HomePage() {
               className="group flex items-center gap-4 text-left"
             >
               <span className="font-display text-[18vw] italic leading-none transition-transform duration-200 group-hover:-translate-y-1 sm:text-8xl lg:text-9xl">
-                {INSTAGRAM_HANDLE}
+                @angura.stor3
               </span>
-              <ArrowUpRight
-                className="h-10 w-10 transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1 sm:h-16 sm:w-16"
-                strokeWidth={1.5}
-              />
+              <span className="flex items-center gap-2 rounded-full border border-bone/30 bg-bone/5 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-bone/90">
+                Instagram
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
+                  strokeWidth={1.5}
+                />
+              </span>
             </button>
             <p className="max-w-[46ch] text-sm leading-relaxed text-bone/80">
               Toda la conversación pasa por Instagram: ahí confirmamos tu

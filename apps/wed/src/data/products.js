@@ -5,6 +5,10 @@ export const INSTAGRAM_URL =
   'https://www.instagram.com/angura.stor3?stkn=NnB5eG9nNWdnemh6&utm_source=qr';
 export const INSTAGRAM_DM_URL = 'https://ig.me/m/angura.stor3';
 
+export const WHATSAPP_NUMBER = '3239755997';
+export const WHATSAPP_CONTACT_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+export const WHATSAPP_URL = `${WHATSAPP_CONTACT_URL}?text=`;
+
 export const HERO_IMAGE =
   'https://images.hostinger.com/bace8d35-f8f1-404f-8154-cdbedb6d11e8.png';
 
