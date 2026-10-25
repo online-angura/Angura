@@ -4,7 +4,7 @@
       "id": "prod-001",
       "name": "Camiseta “Gato estelar”",
       "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
-      "price": 90000,
+      "price": 90002,
       "sizes": [
         "S",
         "M",
@@ -14,22 +14,6 @@
       "images": [
         "/uploads/Camiseta púrpura lavada con logo ANGGURA_nobg-1.png",
         "/uploads/Camiseta morada con gato y estrella_nobg.png"
-      ]
-    },
-    {
-      "id": "prod-002",
-      "name": "Camiseta “Alma nocturna”",
-      "detail": "“Camiseta oversize en algodón lavado efecto vintage, con logo bordado al frente y gráfico de gran formato en la espalda”",
-      "price": 90000,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/Camiseta Gótica Morada con Murciélago (1).png",
-        "/uploads/Camiseta púrpura lavada con logo ANGGURA_nobg.png"
       ]
     }
   ]
