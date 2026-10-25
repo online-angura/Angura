@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Publicar cambios",
+      "type": "shell",
+      "command": "${workspaceFolder}\\publicar.bat",
+      "windows": {
+        "command": "${workspaceFolder}\\publicar.bat"
+      },
+      "linux": {
+        "command": "sh",
+        "args": ["${workspaceFolder}/publicar.sh"]
+      },
+      "osx": {
+        "command": "sh",
+        "args": ["${workspaceFolder}/publicar.sh"]
+      },
+      "problemMatcher": []
+    }
+  ]
+}

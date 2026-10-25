@@ -34,9 +34,6 @@ jobs:
         run: npm ci
 
       - name: Build Angura
-        env:
-          VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
-          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
         run: npm run build --prefix apps/wed
 
       - name: Configure Pages
