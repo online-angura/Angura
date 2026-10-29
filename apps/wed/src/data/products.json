@@ -134,6 +134,24 @@
         "/uploads/Bota militar negra con costuras blancas.png",
         "/uploads/Bota negra de plataforma con costuras contrastantes.png"
       ]
+    },
+    {
+      "id": "prod-009",
+      "name": "Angura · FERROVEIL",
+      "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
+      "price": 119999,
+      "sizes": [
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "images": [
+        "/uploads/Camiseta Angura Acid-Wash con Preguntas-1.png"
+      ]
     }
   ]
 }
