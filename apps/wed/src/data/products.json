@@ -100,7 +100,12 @@
       "id": "prod-097",
       "name": "ANGURA · FERROVEIL",
       "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
-      "price": 120000
+      "price": 120000,
+      "images": [
+        "/uploads/Bota_negra_de_combate_con_costuras_rojas-removebg-preview.png",
+        "/uploads/Botín_negro_con_costuras_rojas-removebg-preview.png",
+        "/uploads/Bota_militar_negra_con_costuras_rojas-removebg-preview.png"
+      ]
     }
   ]
 }
