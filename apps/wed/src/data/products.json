@@ -115,6 +115,22 @@
         "/uploads/Botín_negro_con_costuras_rojas-removebg-preview.png",
         "/uploads/Bota_militar_negra_con_costuras_rojas-removebg-preview.png"
       ]
+    },
+    {
+      "id": "prod-008",
+      "name": "Angura · VEXORA ",
+      "price": 120000,
+      "sizes": [
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "images": [
+        "/uploads/Botín_negro_con_costuras_rojas-removebg-preview.png"
+      ]
     }
   ]
 }
