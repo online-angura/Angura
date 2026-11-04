@@ -138,7 +138,7 @@
     },
     {
       "id": "prod-009",
-      "name": "Angura · FERROVEIL",
+      "name": "ANGURA · FERROVEIL",
       "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
       "price": 120000,
       "sizes": [
@@ -158,7 +158,7 @@
     },
     {
       "id": "prod-010",
-      "name": "REBEL SOUL",
+      "name": "ANGURA · REBEL SOUL",
       "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
       "price": 120000,
       "sizes": [
@@ -178,6 +178,17 @@
         "/uploads/Bota militar morada con plataforma negra.png",
         "/uploads/Bota morada de combate con suela robusta.png",
         "/uploads/Bota militar morada con suela dentada.png"
+      ]
+    },
+    {
+      "id": "prod-011",
+      "name": "ANGURA · CRIMSON REBEL",
+      "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
+      "price": 120000,
+      "sizes": [
+        "32",
+        "33",
+        "3"
       ]
     }
   ]
