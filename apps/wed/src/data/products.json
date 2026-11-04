@@ -215,6 +215,30 @@
         "/uploads/Botín Oxford burdeos con suela track.png",
         "/uploads/Zapato Oxford burdeos con suela chunky.png"
       ]
+    },
+    {
+      "id": "prod-012",
+      "name": "ANGURA · NIGHTFALL",
+      "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
+      "price": 120000,
+      "sizes": [
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "images": [
+        "/uploads/Zapato Oxford negro azulado con plataforma.png",
+        "/uploads/Zapato Oxford de Plataforma Teal Lacado.png",
+        "/uploads/Zapato Oxford de plataforma verde teal brillante (1).png"
+      ]
     }
   ]
 }
