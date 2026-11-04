@@ -155,6 +155,30 @@
         "/uploads/Botín burdeos de plataforma con cordones (1).png",
         "/uploads/Botín burdeos brillante con suela robusta-1.png"
       ]
+    },
+    {
+      "id": "prod-010",
+      "name": "REBEL SOUL",
+      "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
+      "price": 120000,
+      "sizes": [
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "images": [
+        "/uploads/Bota militar morada con plataforma negra.png",
+        "/uploads/Bota morada de combate con suela robusta.png",
+        "/uploads/Bota militar morada con plataforma negra-1.png"
+      ]
     }
   ]
 }
