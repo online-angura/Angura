@@ -49,54 +49,6 @@
       ]
     },
     {
-      "id": "prod-004",
-      "name": "CAMISETA ANGURA – DARK MYSTERY",
-      "detail": "¡Personalizada a tu gusto! Elige tus diseños, colores y detalles para crear una camiseta única que refleje tu estilo.\nANGURA — viste diferente, sé auténtico.",
-      "price": 90000,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/Camiseta Angura Acid-Wash con Preguntas-2.png",
-        "/uploads/Camiseta negra con gráfico de interrogación en spray-2.png"
-      ]
-    },
-    {
-      "id": "prod-005",
-      "name": "CAMISETA ANGURA – MYSTERY",
-      "detail": "¡Personalizada a tu gusto! Elige tus diseños, colores y detalles para crear una camiseta única que refleje tu estilo.\nANGURA — viste diferente, sé auténtico.",
-      "price": 84900,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/Camiseta Angura Acid-Wash con Preguntas-3.png",
-        "/uploads/Camiseta negra con gráfico de interrogación en spray-3.png"
-      ]
-    },
-    {
-      "id": "prod-006",
-      "name": "CAMISETA ANGURA – STILE",
-      "detail": "¡Personalizada a tu gusto! Elige tus diseños, colores y detalles para crear una camiseta única que refleje tu estilo.\nANGURA — viste diferente, sé auténtico. ",
-      "price": 64900,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "/uploads/Camiseta Angura Acid-Wash con Preguntas-4.png",
-        "/uploads/Camiseta negra con gráfico de interrogación en spray-4.png"
-      ]
-    },
-    {
       "id": "prod-007",
       "name": "ANGURA · FERROVEIL",
       "detail": "Tiene un carácter industrial y alternativo, pensado para una colección de botas con presencia.",
